@@ -96,6 +96,10 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.fragment)
 
+    // Koin
+    implementation (libs.koin.android)
+    implementation (libs.koin.androidx.compose)
+
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -104,11 +108,17 @@ dependencies {
     implementation (libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
 
+    // Coil
+    implementation(libs.coil.compose.v240)
+
     //System Ui Controller
     implementation(libs.accompanist.systemuicontroller)
 
     //Lottie
     implementation(libs.lottie.compose)
+
+    //material.icons
+    implementation (libs.androidx.material.icons.extended)
 
 
 }
