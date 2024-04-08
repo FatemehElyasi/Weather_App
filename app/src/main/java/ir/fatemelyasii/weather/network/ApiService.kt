@@ -18,9 +18,9 @@ interface ApiService {
     ): Response<List<Location>>
 
     @GET("forecasts/v1/daily/5day/{location_key}")
-    suspend fun dailyForecasts(
-        @Query("apikey") apikey: String = APIKEY,
-        @Query("q") query: String,
+    suspend fun getDailyForecasts(
+        @Path("location_key") locationKey: String,
+        @Query("apikey") apiKey: String = APIKEY,
         @Query("metric") metric: Boolean = true,
     ): Response<DailyForecasts>
 
