@@ -1,4 +1,4 @@
-package ir.fatemelyasii.weather.Utils
+package ir.fatemelyasii.weather.utils
 
 sealed class BaseModel<out T> {
     data class Success<T>(val data : T):BaseModel<T>()
