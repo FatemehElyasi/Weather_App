@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import ir.fatemelyasii.weather.view.screens.HomeScreen
+import ir.fatemelyasii.weather.view.screens.WeatherScreen
 
 @Composable
 fun Navigation() {

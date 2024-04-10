@@ -1,4 +1,4 @@
-package ir.fatemelyasii.weather.view
+package ir.fatemelyasii.weather.view.screens
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
