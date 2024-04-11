@@ -1,8 +1,6 @@
 package ir.fatemelyasii.weather.model
 
-
 import com.google.gson.annotations.SerializedName
-
 
 data class Location(
     @SerializedName("Version")

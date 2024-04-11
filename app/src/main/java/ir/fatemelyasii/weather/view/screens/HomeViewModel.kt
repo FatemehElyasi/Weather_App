@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 class HomeViewModel:ViewModel(),KoinComponent {
-    private val repo: WeatherRepo by inject()
+     val repo: WeatherRepo by inject()
 
     private val _locations: MutableStateFlow<BaseModel<List<Location>>?> = MutableStateFlow(null)
     //casting data to flow for handling and save data
