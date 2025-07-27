@@ -1,13 +1,11 @@
 [versions]
 accompanistSystemuicontroller = "0.32.0"
-agp = "8.4.0-alpha09"
+agp = "8.4.2"
 coilCompose = "2.6.0"
 coilComposeVersion = "2.4.0"
 compose = "1.0.0-beta01"
 composeShimmer = "1.2.0"
 converterGson = "2.9.0"
-hiltAndroid = "2.48"
-hiltNavigationFragment = "1.2.0"
 koinAndroid = "3.4.0"
 koinAndroidxCompose = "3.4.4"
 kotlin = "1.9.0"
@@ -26,11 +24,11 @@ navigationCompose = "2.7.7"
 roomCompiler = "2.6.1"
 roomKtx = "2.6.1"
 runtimeLivedata = "1.6.0"
+ksp = "1.9.0-1.0.13"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-hilt-navigation-fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigationFragment" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -43,8 +41,6 @@ coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilCompose" }
 compose = { module = "com.github.bumptech.glide:compose", version.ref = "compose" }
 compose-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "composeShimmer" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -67,4 +63,5 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converte
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref ="ksp" }
 
