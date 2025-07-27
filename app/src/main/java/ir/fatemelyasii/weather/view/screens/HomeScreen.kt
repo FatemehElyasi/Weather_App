@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ir.fatemelyasii.weather.utils.BaseModel
 import kotlinx.coroutines.delay
+import ir.fatemelyasii.weather.R
 
 @Composable
 fun HomeScreen(
@@ -66,7 +68,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Welcome to weather app.",
+            text = stringResource(R.string.welcome_text),
             color = Color.White,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold
@@ -80,20 +82,26 @@ fun HomeScreen(
                 .background(MaterialTheme.colorScheme.secondary),
             contentAlignment = Alignment.Center
         ) {
-            TextField(modifier = Modifier.fillMaxWidth(), value = city, onValueChange = {
-                setCity(it)
-            }, colors = TextFieldDefaults.colors(
-
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                disabledContainerColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Transparent,
-            ), placeholder = {
-                Text("City")
-            })
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                value = city,
+                onValueChange = {
+                    setCity(it)
+                }, colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent,
+                ), placeholder = {
+                    Text(
+                        stringResource(R.string.city_text)
+                    )
+                }
+            )
         }
         Spacer(modifier = Modifier.height(32.dp))
         AnimatedVisibility(
@@ -102,8 +110,12 @@ fun HomeScreen(
             exit = fadeOut() + scaleOut()
         ) {
             Column {
-                Text(text = "Choose your city:", color = Color.White)
+                Text(
+                    text = stringResource(R.string.choose_city),
+                    color = Color.White
+                )
                 Spacer(modifier = Modifier.height(8.dp))
+
                 when (val data = locations) {
                     is BaseModel.Success -> {
                         LazyVerticalGrid(
@@ -112,17 +124,18 @@ fun HomeScreen(
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             items(data.data) { location ->
-                                Row(modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(50.dp)
-                                    .clip(
-                                        RoundedCornerShape(8.dp)
-                                    )
-                                    .background(MaterialTheme.colorScheme.secondary)
-                                    .clickable {
-                                        navController.navigate("weather/${location.key}/${location.englishName}/${location.country.englishName}")
-                                    }
-                                    .padding(8.dp),
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(50.dp)
+                                        .clip(
+                                            RoundedCornerShape(8.dp)
+                                        )
+                                        .background(MaterialTheme.colorScheme.secondary)
+                                        .clickable {
+                                            navController.navigate("weather/${location.key}/${location.englishName}/${location.country.englishName}")
+                                        }
+                                        .padding(8.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically) {
                                     Column {

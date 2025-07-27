@@ -1,5 +1,6 @@
 package ir.fatemelyasii.weather.view.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,8 +48,10 @@ import ir.fatemelyasii.weather.ui.theme.russoFont
 import ir.fatemelyasii.weather.utils.BaseModel
 import java.text.SimpleDateFormat
 import java.util.Date
+import ir.fatemelyasii.weather.R
 
 
+@SuppressLint("SimpleDateFormat")
 @Composable
 fun WeatherScreen(
     navController: NavController,
@@ -56,7 +60,7 @@ fun WeatherScreen(
     country: String,
     //instance of viewmodel
     viewModel: WeatherViewModel = viewModel()
-){
+) {
     //collect data
     val dailyForecasts by viewModel.dailyForecast.collectAsState()
     val hourlyForecasts by viewModel.hourlyForecast.collectAsState()
@@ -107,7 +111,7 @@ fun WeatherScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "Hourly Forecasts:",
+            stringResource(R.string.hourly_forecasts),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             color = Color.White
@@ -152,7 +156,7 @@ fun WeatherScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "Daily Forecasts:",
+            stringResource(R.string.daily_forecasts),
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             color = Color.White
@@ -175,18 +179,26 @@ fun WeatherScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "${SimpleDateFormat("d").format(Date(forecast.epochDate*1000))}th",
+                            text = "${SimpleDateFormat("d").format(Date(forecast.epochDate * 1000))}th",
                             color = Color.White
                         )
                         Row {
-                            Icon(Icons.Sharp.ArrowDownward, tint = Color(0xffff5353), contentDescription = null)
+                            Icon(
+                                Icons.Sharp.ArrowDownward,
+                                tint = Color(0xffff5353),
+                                contentDescription = null
+                            )
                             Text(text = "${forecast.temperature.min.value}°", color = Color.White)
                             Spacer(modifier = Modifier.width(6.dp))
-                            Icon(Icons.Sharp.ArrowUpward, tint = Color(0xff2eff8c), contentDescription = null)
+                            Icon(
+                                Icons.Sharp.ArrowUpward,
+                                tint = Color(0xff2eff8c),
+                                contentDescription = null
+                            )
                             Text(text = "${forecast.temperature.max.value}°", color = Color.White)
                         }
                         AsyncImage(
-                            modifier=Modifier.size(70.dp),
+                            modifier = Modifier.size(70.dp),
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data("https://developer.accuweather.com/sites/default/files/${forecast.day.icon.fixIcon()}-s.png")
                                 .build(),

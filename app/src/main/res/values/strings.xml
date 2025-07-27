@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Weather</string>
+
+    <string name="welcome_text">Welcome to weather app.</string>
+    <string name="city_text">City</string>
+    <string name="choose_city">Choose your City:</string>
+
+    <string name="hourly_forecasts">Hourly Forecasts:</string>
+    <string name="daily_forecasts">Daily Forecasts:</string>
+
 </resources>
