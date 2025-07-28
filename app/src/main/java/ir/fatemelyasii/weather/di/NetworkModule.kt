@@ -1,6 +1,6 @@
 package ir.fatemelyasii.weather.di
 
-import ir.fatemelyasii.weather.network.apiService.HeaderInterceptor
+import ir.fatemelyasii.weather.network.HeaderInterceptor
 import ir.fatemelyasii.weather.network.apiService.ApiService
 import okhttp3.OkHttpClient
 import org.koin.core.annotation.Module
