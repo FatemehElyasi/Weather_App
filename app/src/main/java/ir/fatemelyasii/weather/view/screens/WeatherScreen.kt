@@ -49,6 +49,7 @@ import ir.fatemelyasii.weather.utils.BaseModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import ir.fatemelyasii.weather.R
+import org.koin.compose.viewmodel.koinViewModel
 
 
 @SuppressLint("SimpleDateFormat")
@@ -59,7 +60,7 @@ fun WeatherScreen(
     locationName: String,
     country: String,
     //instance of viewmodel
-    viewModel: WeatherViewModel = viewModel()
+    viewModel: WeatherViewModel = koinViewModel()
 ) {
     //collect data
     val dailyForecasts by viewModel.dailyForecast.collectAsState()

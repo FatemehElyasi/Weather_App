@@ -1,4 +1,4 @@
-package ir.fatemelyasii.weather.network
+package ir.fatemelyasii.weather.network.apiService
 
 import ir.fatemelyasii.weather.model.DailyForecasts
 import ir.fatemelyasii.weather.model.HourlyForecast
@@ -11,6 +11,7 @@ import retrofit2.http.Query
 private const val APIKEY = "VtKswq8uqVTa3GJ0YYRPwUM8GJRUETUU"
 
 interface ApiService {
+
     @GET("locations/v1/cities/search")
     suspend fun searchLocation(
         @Query("apikey") apikey: String = APIKEY,
@@ -31,3 +32,4 @@ interface ApiService {
         @Query("metric") metric: Boolean = true,
     ): Response<List<HourlyForecast>>
 }
+

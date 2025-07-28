@@ -3,11 +3,15 @@ package ir.fatemelyasii.weather.repository
 import ir.fatemelyasii.weather.model.DailyForecasts
 import ir.fatemelyasii.weather.model.HourlyForecast
 import ir.fatemelyasii.weather.model.Location
-import ir.fatemelyasii.weather.network.ApiService
+import ir.fatemelyasii.weather.network.apiService.ApiService
 import ir.fatemelyasii.weather.utils.BaseModel
+import org.koin.core.annotation.Single
 import retrofit2.Response
 
- class WeatherRepoImpl(private val apiService: ApiService) : WeatherRepo {
+@Single
+class WeatherRepoImpl(
+    private val apiService: ApiService
+) : WeatherRepository {
     override suspend fun searchLocation(query: String): BaseModel<List<Location>> {
         return request {
             apiService.searchLocation(query = query)
@@ -27,7 +31,6 @@ import retrofit2.Response
     }
 }
 
-//-------------------------------------------------------------------------------
 suspend fun <T> request(request: suspend () -> Response<T>): BaseModel<T> {
     try {
         request().also {
