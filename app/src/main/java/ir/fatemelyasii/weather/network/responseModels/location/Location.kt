@@ -22,7 +22,7 @@ data class Location(
     @SerializedName("Country")
     val country: Name,
     @SerializedName("timeZone")
-    val timeZone: TimeZone,
+    val timeZone: TimeZone?,
     @SerializedName("GeoPosition")
     val geoPosition: Position,
     @SerializedName("IsAlias")

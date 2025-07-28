@@ -1,46 +1,38 @@
 package ir.fatemelyasii.weather.repository
 
-import ir.fatemelyasii.weather.network.responseModels.hourlyForecast.HourlyForecast
 import ir.fatemelyasii.weather.network.apiService.ApiService
-import ir.fatemelyasii.weather.network.responseModels.dailyForcasts.DailyForecasts
-import ir.fatemelyasii.weather.network.responseModels.location.Location
-import ir.fatemelyasii.weather.utils.BaseModel
+import ir.fatemelyasii.weather.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.utils.mapper.toViewEntity
+import ir.fatemelyasii.weather.utils.request
+import ir.fatemelyasii.weather.viewEntity.DailyForecastViewEntity
+import ir.fatemelyasii.weather.viewEntity.HourlyForecastViewEntity
+import ir.fatemelyasii.weather.viewEntity.LocationViewEntity
+import map
 import org.koin.core.annotation.Single
-import retrofit2.Response
 
 @Single
 class WeatherRepoImpl(
     private val apiService: ApiService
 ) : WeatherRepository {
-    override suspend fun searchLocation(query: String): BaseModel<List<Location>> {
+
+    override suspend fun searchLocation(query: String): BaseModel<List<LocationViewEntity>> {
         return request {
             apiService.searchLocation(query = query)
-        }
+        }.map { list -> list.map { it.toViewEntity() } }
     }
 
-    override suspend fun getDailyForecasts(locationKey: String): BaseModel<DailyForecasts> {
+    override suspend fun getDailyForecasts(locationKey: String): BaseModel<List<DailyForecastViewEntity>> {
         return request {
-            apiService.getDailyForecasts(locationKey = locationKey)
+            apiService.getDailyForecasts(locationKey)
+        }.map { response ->
+            response.dailyForecasts.map { it.toViewEntity() }
         }
     }
 
-    override suspend fun getHourlyForecasts(locationKey: String): BaseModel<List<HourlyForecast>> {
+    override suspend fun getHourlyForecasts(locationKey: String): BaseModel<List<HourlyForecastViewEntity>> {
         return request {
             apiService.getHourlyForecasts(locationKey = locationKey)
-        }
+        }.map { list -> list.map { it.toViewEntity() } }
     }
 }
 
-suspend fun <T> request(request: suspend () -> Response<T>): BaseModel<T> {
-    try {
-        request().also {
-            return if (it.isSuccessful) {
-                BaseModel.Success(it.body()!!)
-            } else {
-                BaseModel.Error(it.errorBody()?.string().toString())
-            }
-        }
-    } catch (e: Exception) {
-        return BaseModel.Error(e.message.toString())
-    }
-}

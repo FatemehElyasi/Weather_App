@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ir.fatemelyasii.weather.R
-import ir.fatemelyasii.weather.utils.BaseModel
+import ir.fatemelyasii.weather.utils.baseModel.BaseModel
 import kotlinx.coroutines.delay
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -134,7 +134,7 @@ fun HomeScreen(
                                         )
                                         .background(MaterialTheme.colorScheme.secondary)
                                         .clickable {
-                                            navController.navigate("weather/${location.key}/${location.englishName}/${location.country.englishName}")
+                                            navController.navigate("weather/${location.key}/${location.englishName}/${location.countryName}")
                                         }
                                         .padding(8.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -146,7 +146,7 @@ fun HomeScreen(
                                             fontWeight = FontWeight.Bold
                                         )
                                         Text(
-                                            location.country.englishName,
+                                            location.countryName,
                                             color = Color.Gray,
                                             fontSize = 12.sp
                                         )

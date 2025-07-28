@@ -1,6 +1,8 @@
 package ir.fatemelyasii.weather.view.screens
 
+import android.R.attr.data
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,7 +47,8 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import ir.fatemelyasii.weather.R
 import ir.fatemelyasii.weather.ui.theme.russoFont
-import ir.fatemelyasii.weather.utils.BaseModel
+import ir.fatemelyasii.weather.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.viewEntity.DailyForecastViewEntity
 import org.koin.compose.viewmodel.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -98,7 +101,7 @@ fun WeatherScreen(
             val temp = data.data.first().temperature
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 Text(
-                    text = "${temp.value}°",
+                    text = "${temp}°",
                     fontWeight = FontWeight.Bold,
                     fontSize = 80.sp,
                     color = Color.White,
@@ -130,21 +133,23 @@ fun WeatherScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = SimpleDateFormat("H a").format(Date(forecast.epochDateTime * 1000)),
+                            text = forecast.epochDateTime?.let {
+                                SimpleDateFormat("H a").format(Date(it * 1000))
+                            } ?: "N/A",
                             color = Color.Gray
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         AsyncImage(
                             modifier = Modifier.size(70.dp),
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://developer.accuweather.com/sites/default/files/${forecast.weatherIcon.fixIcon()}-s.png")
+                                .data("https://developer.accuweather.com/sites/default/files/${forecast.weatherIcon?.fixIcon()}-s.png")
                                 .build(),
                             contentScale = ContentScale.Fit,
                             contentDescription = null
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = forecast.temperature.value.toString() + "°",
+                            text = forecast.temperature.toString() + "°",
                             color = Color.White
                         )
                     }
@@ -164,47 +169,55 @@ fun WeatherScreen(
         Spacer(modifier = Modifier.height(10.dp))
         AnimatedVisibility(visible = dailyForecasts is BaseModel.Success) {
             val data = dailyForecasts as BaseModel.Success
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(data.data.dailyForecasts) { forecast ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(56.dp)
-                            .clip(RoundedCornerShape(4.dp))
-                            .background(MaterialTheme.colorScheme.secondary)
-                            .padding(start = 16.dp, end = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "${SimpleDateFormat("d").format(Date(forecast.epochDate * 1000))}th",
-                            color = Color.White
-                        )
-                        Row {
-                            Icon(
-                                Icons.Sharp.ArrowDownward,
-                                tint = Color(0xffff5353),
-                                contentDescription = null
+
+            if (data.data.isEmpty()) {
+                Text("No daily forecasts available", color = Color.White)
+            } else {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(data.data) { forecast ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp)
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(MaterialTheme.colorScheme.secondary)
+                                .padding(start = 16.dp, end = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = forecast.dateFormatted,
+                                color = Color.White
                             )
-                            Text(text = "${forecast.temperature.min.value}°", color = Color.White)
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Icon(
-                                Icons.Sharp.ArrowUpward,
-                                tint = Color(0xff2eff8c),
-                                contentDescription = null
+                            Row {
+                                Icon(
+                                    imageVector = Icons.Sharp.ArrowDownward,
+                                    tint = Color(0xffff5353),
+                                    contentDescription = null
+                                )
+                                Text(text = "${forecast.minTemp}°", color = Color.White)
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Icon(
+                                    imageVector = Icons.Sharp.ArrowUpward,
+                                    tint = Color(0xff2eff8c),
+                                    contentDescription = null
+                                )
+                                Text(
+                                    text = "${forecast.maxTemp}°",
+                                    color = Color.White
+                                )
+                            }
+                            AsyncImage(
+                                modifier = Modifier.size(70.dp),
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data("https://developer.accuweather.com/sites/default/files/${forecast.dayIcon.fixIcon()}-s.png")
+                                    .build(),
+                                contentDescription = null,
+                                contentScale = ContentScale.Fit
                             )
-                            Text(text = "${forecast.temperature.max.value}°", color = Color.White)
                         }
-                        AsyncImage(
-                            modifier = Modifier.size(70.dp),
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://developer.accuweather.com/sites/default/files/${forecast.day.icon.fixIcon()}-s.png")
-                                .build(),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit
-                        )
                     }
                 }
             }
