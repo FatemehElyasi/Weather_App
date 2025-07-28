@@ -1,9 +1,9 @@
 package ir.fatemelyasii.weather.repository
 
-import ir.fatemelyasii.weather.model.DailyForecasts
-import ir.fatemelyasii.weather.model.HourlyForecast
-import ir.fatemelyasii.weather.model.Location
+import ir.fatemelyasii.weather.network.responseModels.hourlyForecast.HourlyForecast
 import ir.fatemelyasii.weather.network.apiService.ApiService
+import ir.fatemelyasii.weather.network.responseModels.dailyForcasts.DailyForecasts
+import ir.fatemelyasii.weather.network.responseModels.location.Location
 import ir.fatemelyasii.weather.utils.BaseModel
 import org.koin.core.annotation.Single
 import retrofit2.Response

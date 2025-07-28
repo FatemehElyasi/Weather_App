@@ -40,16 +40,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import ir.fatemelyasii.weather.R
 import ir.fatemelyasii.weather.ui.theme.russoFont
 import ir.fatemelyasii.weather.utils.BaseModel
+import org.koin.compose.viewmodel.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
-import ir.fatemelyasii.weather.R
-import org.koin.compose.viewmodel.koinViewModel
 
 
 @SuppressLint("SimpleDateFormat")

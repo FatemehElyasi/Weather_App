@@ -1,8 +1,8 @@
 package ir.fatemelyasii.weather.network.apiService
 
-import ir.fatemelyasii.weather.model.DailyForecasts
-import ir.fatemelyasii.weather.model.HourlyForecast
-import ir.fatemelyasii.weather.model.Location
+import ir.fatemelyasii.weather.network.responseModels.dailyForcasts.DailyForecasts
+import ir.fatemelyasii.weather.network.responseModels.hourlyForecast.HourlyForecast
+import ir.fatemelyasii.weather.network.responseModels.location.Location
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

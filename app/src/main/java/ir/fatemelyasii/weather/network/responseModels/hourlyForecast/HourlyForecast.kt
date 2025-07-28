@@ -1,21 +1,21 @@
-package ir.fatemelyasii.weather.model
-
+package ir.fatemelyasii.weather.network.responseModels.hourlyForecast
 
 import com.google.gson.annotations.SerializedName
+import ir.fatemelyasii.weather.network.responseModels.location.Value
 
 data class HourlyForecast(
     @SerializedName("Date")
-    val date:String,
+    val date: String,
     @SerializedName("EpochDateTime")
-    val epochDateTime:Long,
+    val epochDateTime: Long,
     @SerializedName("WeatherIcon")
-    val weatherIcon:Int,
+    val weatherIcon: Int,
     @SerializedName("IconPhrase")
-    val iconPhrase:String,
+    val iconPhrase: String,
     @SerializedName("HasPrecipitation")
-    val hasPrecipitation:Boolean,
+    val hasPrecipitation: Boolean,
     @SerializedName("IsDaylight")
-    val isDaylight:Boolean,
+    val isDaylight: Boolean,
     @SerializedName("Temperature")
     val temperature: Value
 )

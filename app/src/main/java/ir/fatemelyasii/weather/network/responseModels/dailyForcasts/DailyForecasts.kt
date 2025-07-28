@@ -1,4 +1,4 @@
-package ir.fatemelyasii.weather.model
+package ir.fatemelyasii.weather.network.responseModels.dailyForcasts
 
 import com.google.gson.annotations.SerializedName
 
