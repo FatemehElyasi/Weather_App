@@ -1,5 +1,6 @@
-package ir.fatemelyasii.weather.view.screens
+package ir.fatemelyasii.weather.view.screens.homeScreen
 
+import android.R.attr.fontWeight
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -39,15 +40,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import ir.fatemelyasii.weather.R
 import ir.fatemelyasii.weather.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.viewEntity.LocationViewEntity
 import kotlinx.coroutines.delay
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
+    navigateToWeather: (LocationViewEntity) -> Unit,
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val locations by viewModel.locations.collectAsState()
@@ -56,7 +59,6 @@ fun HomeScreen(
     }
 
     LaunchedEffect(city) {
-        delay(500)
         if (city.isNotEmpty()) {
             viewModel.searchLocation(city)
         }
@@ -134,19 +136,25 @@ fun HomeScreen(
                                         )
                                         .background(MaterialTheme.colorScheme.secondary)
                                         .clickable {
-                                            navController.navigate("weather/${location.key}/${location.englishName}/${location.countryName}")
+                                            navigateToWeather(
+                                                LocationViewEntity(
+                                                    key = location.key,
+                                                    englishName = location.englishName,
+                                                    countryName = location.countryName
+                                                )
+                                            )
                                         }
                                         .padding(8.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically) {
                                     Column {
                                         Text(
-                                            location.englishName,
+                                            location.englishName.orEmpty(),
                                             color = Color.White,
                                             fontWeight = FontWeight.Bold
                                         )
                                         Text(
-                                            location.countryName,
+                                            location.countryName.orEmpty(),
                                             color = Color.Gray,
                                             fontSize = 12.sp
                                         )

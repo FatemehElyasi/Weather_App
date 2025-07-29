@@ -6,7 +6,7 @@ import ir.fatemelyasii.weather.viewEntity.HourlyForecastViewEntity
 
 fun HourlyForecast.toViewEntity(): HourlyForecastViewEntity {
     return HourlyForecastViewEntity(
-        dateFormatted = this.date?.let { DateFormatter.formatToReadableDate(it) } ?: "Unknown date",
+        dateFormatted = this.date.let { DateFormatter.formatToReadableDate(it) },
         temperature = this.temperature.value,
         weatherIcon = this.weatherIcon,
         description = this.iconPhrase,

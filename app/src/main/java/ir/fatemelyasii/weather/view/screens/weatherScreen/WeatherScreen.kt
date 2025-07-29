@@ -1,8 +1,5 @@
-package ir.fatemelyasii.weather.view.screens
+package ir.fatemelyasii.weather.view.screens.weatherScreen
 
-import android.R.attr.data
-import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -42,29 +39,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import ir.fatemelyasii.weather.R
 import ir.fatemelyasii.weather.ui.theme.russoFont
 import ir.fatemelyasii.weather.utils.baseModel.BaseModel
-import ir.fatemelyasii.weather.viewEntity.DailyForecastViewEntity
 import org.koin.compose.viewmodel.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 
 
-@SuppressLint("SimpleDateFormat")
 @Composable
 fun WeatherScreen(
-    navController: NavController,
+    navigateToHomeScreen: () -> Unit,
     locationKey: String,
     locationName: String,
     country: String,
-    //instance of viewmodel
     viewModel: WeatherViewModel = koinViewModel()
 ) {
-    //collect data
+
     val dailyForecasts by viewModel.dailyForecast.collectAsState()
     val hourlyForecasts by viewModel.hourlyForecast.collectAsState()
 
@@ -80,7 +73,7 @@ fun WeatherScreen(
                 modifier = Modifier
                     .size(30.dp)
                     .clickable {
-                        navController.popBackStack()
+                        navigateToHomeScreen()
                     },
                 tint = Color.White,
                 contentDescription = null,

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serializable)
 }
 
 android {
@@ -67,6 +68,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.kotlinx.serialization)
     //shimmer:
     implementation(libs.compose.shimmer)
     //Navigation Component
@@ -89,7 +91,6 @@ dependencies {
     implementation(libs.koin.annotations)
     implementation(libs.koin.compose.viewmodel)
     ksp(libs.koin.ksp.compiler)
-
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

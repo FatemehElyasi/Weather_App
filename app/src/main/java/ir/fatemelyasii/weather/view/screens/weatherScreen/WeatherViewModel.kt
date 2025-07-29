@@ -1,4 +1,4 @@
-package ir.fatemelyasii.weather.view.screens
+package ir.fatemelyasii.weather.view.screens.weatherScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,12 +17,10 @@ class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
 ) : ViewModel() {
 
-    private val _hourlyForecast: MutableStateFlow<BaseModel<List<HourlyForecastViewEntity>>> =
-        MutableStateFlow(BaseModel.Loading)
+    private val _hourlyForecast: MutableStateFlow<BaseModel<List<HourlyForecastViewEntity>>> = MutableStateFlow(BaseModel.Loading)
     val hourlyForecast = _hourlyForecast.asStateFlow()
 
-    private val _dailyForecast: MutableStateFlow<BaseModel<List<DailyForecastViewEntity>>> =
-        MutableStateFlow(BaseModel.Loading)
+    private val _dailyForecast: MutableStateFlow<BaseModel<List<DailyForecastViewEntity>>> = MutableStateFlow(BaseModel.Loading)
     val dailyForecast = _dailyForecast.asStateFlow()
 
     fun getHourlyForecast(locationKey: String) {

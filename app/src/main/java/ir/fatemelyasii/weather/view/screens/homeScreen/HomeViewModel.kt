@@ -1,4 +1,4 @@
-package ir.fatemelyasii.weather.view.screens
+package ir.fatemelyasii.weather.view.screens.homeScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,9 +16,8 @@ import org.koin.core.component.KoinComponent
 class HomeViewModel(
     private val weatherRepository: WeatherRepository,
 ) : ViewModel(), KoinComponent {
-    private val _locations: MutableStateFlow<BaseModel<List<LocationViewEntity>>?> =
-        MutableStateFlow(null)
 
+    private val _locations: MutableStateFlow<BaseModel<List<LocationViewEntity>>?> = MutableStateFlow(null)
     val locations = _locations.asStateFlow()
 
     fun searchLocation(query: String) {

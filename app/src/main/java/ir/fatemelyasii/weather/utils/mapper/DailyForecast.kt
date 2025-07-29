@@ -7,7 +7,7 @@ import ir.fatemelyasii.weather.viewEntity.DailyForecastViewEntity
 
 fun DailyForecast.toViewEntity(): DailyForecastViewEntity {
     return DailyForecastViewEntity(
-        dateFormatted = this.date?.let { DateFormatter.formatToReadableDate(it) } ?: "Unknown date",
+        dateFormatted = this.date.let { DateFormatter.formatToReadableDate(it) },
         minTemp = this.temperature.min.value,
         maxTemp = this.temperature.max.value,
         dayDescription = this.day.iconPhrase,
@@ -15,8 +15,7 @@ fun DailyForecast.toViewEntity(): DailyForecastViewEntity {
         dayIcon = this.day.icon,
         nightIcon = this.night.icon,
         epochDate = this.epochDate,
-
-        )
+    )
 }
 
 
