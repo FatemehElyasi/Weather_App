@@ -42,12 +42,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import ir.fatemelyasii.weather.R
+import ir.fatemelyasii.weather.model.viewEntity.DailyForecastViewEntity
+import ir.fatemelyasii.weather.model.viewEntity.HourlyForecastViewEntity
 import ir.fatemelyasii.weather.view.ui.theme.russoFont
 import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
 import org.koin.compose.viewmodel.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
-
+import java.util.Locale
 
 @Composable
 fun WeatherScreen(
@@ -57,7 +59,6 @@ fun WeatherScreen(
     country: String,
     viewModel: WeatherViewModel = koinViewModel()
 ) {
-
     val dailyForecasts by viewModel.dailyForecast.collectAsState()
     val hourlyForecasts by viewModel.hourlyForecast.collectAsState()
 
@@ -66,172 +67,208 @@ fun WeatherScreen(
         viewModel.getHourlyForecast(locationKey)
     }
 
-    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-        Row(modifier = Modifier.padding(vertical = 32.dp)) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                modifier = Modifier
-                    .size(30.dp)
-                    .clickable {
-                        navigateToHomeScreen()
-                    },
-                tint = Color.White,
-                contentDescription = null,
-            )
-            Spacer(modifier = Modifier.width(10.dp))
-            Column {
-                Text(
-                    text = locationName,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp
-                )
-                Text(text = country, color = Color.Gray)
-            }
-        }
-        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Success) {
-            val data = hourlyForecasts as BaseModel.Success
-            val temp = data.data.first().temperature
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(
-                    text = "${temp}°",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 80.sp,
-                    color = Color.White,
-                    fontFamily = russoFont
-                )
-            }
-        }
-        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Loading) {
-            Loading()
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            stringResource(R.string.hourly_forecasts),
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            color = Color.White
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Success) {
-            val data = hourlyForecasts as BaseModel.Success
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(data.data) { forecast ->
-                    Column(
-                        modifier = Modifier
-                            .size(100.dp, 140.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .background(MaterialTheme.colorScheme.secondary),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(
-                            text = forecast.epochDateTime?.let {
-                                SimpleDateFormat("H a").format(Date(it * 1000))
-                            } ?: "N/A",
-                            color = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        AsyncImage(
-                            modifier = Modifier.size(70.dp),
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://developer.accuweather.com/sites/default/files/${forecast.weatherIcon?.fixIcon()}-s.png")
-                                .build(),
-                            contentScale = ContentScale.Fit,
-                            contentDescription = null
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = forecast.temperature.toString() + "°",
-                            color = Color.White
-                        )
-                    }
-                }
-            }
-        }
-        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Loading) {
-            Loading()
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            stringResource(R.string.daily_forecasts),
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            color = Color.White
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        AnimatedVisibility(visible = dailyForecasts is BaseModel.Success) {
-            val data = dailyForecasts as BaseModel.Success
+    Column(
+        modifier = Modifier
+        .padding(horizontal = 16.dp)
+    ) {
+        WeatherHeader(locationName, country, onBackClick = navigateToHomeScreen)
 
-            if (data.data.isEmpty()) {
+
+        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Success) {
+            val data = (hourlyForecasts as BaseModel.Success<List<HourlyForecastViewEntity>>).data
+            data.firstOrNull()?.temperature?.let {
+                TemperatureDisplay(
+                    temp = it.toInt()
+                )
+            }
+        }
+
+        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Loading) {
+            LoadingState()
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        ForecastSectionTitle(stringResource(R.string.hourly_forecasts))
+
+        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Success) {
+            val data = (hourlyForecasts as BaseModel.Success<List<HourlyForecastViewEntity>>).data
+            HourlyForecastList(data)
+        }
+
+        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Loading) {
+            LoadingState()
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        ForecastSectionTitle(stringResource(R.string.daily_forecasts))
+
+        AnimatedVisibility(visible = dailyForecasts is BaseModel.Success) {
+            val data = (dailyForecasts as BaseModel.Success<List<DailyForecastViewEntity>>).data
+            if (data.isEmpty()) {
                 Text("No daily forecasts available", color = Color.White)
             } else {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(data.data) { forecast ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(56.dp)
-                                .clip(RoundedCornerShape(4.dp))
-                                .background(MaterialTheme.colorScheme.secondary)
-                                .padding(start = 16.dp, end = 8.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = forecast.dateFormatted,
-                                color = Color.White
-                            )
-                            Row {
-                                Icon(
-                                    imageVector = Icons.Sharp.ArrowDownward,
-                                    tint = Color(0xffff5353),
-                                    contentDescription = null
-                                )
-                                Text(text = "${forecast.minTemp}°", color = Color.White)
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Icon(
-                                    imageVector = Icons.Sharp.ArrowUpward,
-                                    tint = Color(0xff2eff8c),
-                                    contentDescription = null
-                                )
-                                Text(
-                                    text = "${forecast.maxTemp}°",
-                                    color = Color.White
-                                )
-                            }
-                            AsyncImage(
-                                modifier = Modifier.size(70.dp),
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data("https://developer.accuweather.com/sites/default/files/${forecast.dayIcon.fixIcon()}-s.png")
-                                    .build(),
-                                contentDescription = null,
-                                contentScale = ContentScale.Fit
-                            )
-                        }
-                    }
-                }
+                DailyForecastList(data)
             }
         }
-        AnimatedVisibility(visible = hourlyForecasts is BaseModel.Loading) {
-            Loading()
-        }
-    }
-}
 
-fun Int.fixIcon(): String {
-    return if (this > 9) {
-        toString()
-    } else {
-        "0${this}"
+        AnimatedVisibility(visible = dailyForecasts is BaseModel.Loading) {
+            LoadingState()
+        }
     }
 }
 
 @Composable
-fun Loading() {
+fun WeatherHeader(
+    locationName: String,
+    country: String,
+    onBackClick: () -> Unit
+) {
+    Row(modifier = Modifier.padding(vertical = 32.dp)) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+            contentDescription = null,
+            modifier = Modifier
+                .size(30.dp)
+                .clickable { onBackClick() },
+            tint = Color.White
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column {
+            Text(
+                text = locationName,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp
+            )
+            Text(country, color = Color.Gray)
+        }
+    }
+}
+
+@Composable
+fun TemperatureDisplay(temp: Int) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "$temp°",
+            fontWeight = FontWeight.Bold,
+            fontSize = 80.sp,
+            color = Color.White,
+            fontFamily = russoFont
+        )
+    }
+}
+
+@Composable
+fun ForecastSectionTitle(title: String) {
+    Text(
+        text = title,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        color = Color.White
+    )
+    Spacer(modifier = Modifier.height(10.dp))
+}
+
+@Composable
+fun HourlyForecastList(forecasts: List<HourlyForecastViewEntity>) {
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        items(forecasts) { forecast ->
+            Column(
+                modifier = Modifier
+                    .size(100.dp, 140.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.secondary),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val time = forecast.epochDateTime?.let {
+                    SimpleDateFormat("H a", Locale.getDefault()).format(Date(it * 1000))
+                } ?: "N/A"
+
+                Text(
+                    text = time,
+                    color = Color.Gray
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data("https://developer.accuweather.com/sites/default/files/${forecast.weatherIcon.fixIcon()}-s.png")
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.size(70.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "${forecast.temperature}°",
+                    color = Color.White
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DailyForecastList(forecasts: List<DailyForecastViewEntity>) {
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        items(forecasts) { forecast ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(MaterialTheme.colorScheme.secondary)
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = forecast.dateFormatted,
+                    color = Color.White
+                )
+
+                Row {
+                    Icon(
+                        Icons.Sharp.ArrowDownward,
+                        tint = Color(0xffff5353),
+                        contentDescription = null
+                    )
+                    Text("${forecast.minTemp}°", color = Color.White)
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Icon(
+                        Icons.Sharp.ArrowUpward,
+                        tint = Color(0xff2eff8c),
+                        contentDescription = null
+                    )
+                    Text("${forecast.maxTemp}°", color = Color.White)
+                }
+
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data("https://developer.accuweather.com/sites/default/files/${forecast.dayIcon.fixIcon()}-s.png")
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.size(70.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun LoadingState() {
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(color = Color.White)
     }
+}
+
+fun Int?.fixIcon(): String {
+    return this?.let { if (it < 10) "0$it" else "$it" } ?: "01"
 }
