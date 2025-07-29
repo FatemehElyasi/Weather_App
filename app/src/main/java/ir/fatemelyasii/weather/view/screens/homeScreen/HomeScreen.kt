@@ -7,6 +7,7 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,11 +27,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,8 +38,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.fatemelyasii.weather.R
-import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
 import ir.fatemelyasii.weather.model.viewEntity.LocationViewEntity
+import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -50,20 +48,15 @@ fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel()
 ) {
     val locations by viewModel.locations.collectAsState()
-    val (city, setCity) = remember {
-        mutableStateOf("")
-    }
-
-    LaunchedEffect(city) {
-        if (city.isNotEmpty()) {
-            viewModel.searchLocation(city)
-        }
-    }
+    val city by viewModel.city.collectAsState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 64.dp),
+            .padding(
+                horizontal = 16.dp,
+                vertical = 64.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -72,9 +65,9 @@ fun HomeScreen(
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.height(16.dp))
         Box(
             modifier = Modifier
+                .padding(top = 16.dp)
                 .fillMaxWidth()
                 .height(55.dp)
                 .clip(RoundedCornerShape(8.dp))
@@ -83,11 +76,12 @@ fun HomeScreen(
         ) {
             TextField(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .focusable(),
                 value = city,
-                onValueChange = {
-                    setCity(it)
-                }, colors = TextFieldDefaults.colors(
+                singleLine = true,
+                onValueChange = { viewModel.setCity(it) },
+                colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent,
