@@ -1,6 +1,5 @@
 package ir.fatemelyasii.weather.view.screens.homeScreen
 
-import android.R.attr.fontWeight
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -40,12 +39,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import ir.fatemelyasii.weather.R
-import ir.fatemelyasii.weather.utils.baseModel.BaseModel
-import ir.fatemelyasii.weather.viewEntity.LocationViewEntity
-import kotlinx.coroutines.delay
+import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.model.viewEntity.LocationViewEntity
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

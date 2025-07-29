@@ -16,8 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import ir.fatemelyasii.weather.ui.theme.WeatherTheme
-import ir.fatemelyasii.weather.utils.MyScreen
+import ir.fatemelyasii.weather.view.ui.theme.WeatherTheme
+import ir.fatemelyasii.weather.view.utils.MyScreen
 import ir.fatemelyasii.weather.view.screens.homeScreen.HomeScreen
 import ir.fatemelyasii.weather.view.screens.homeScreen.HomeViewModel
 import ir.fatemelyasii.weather.view.screens.weatherScreen.WeatherScreen

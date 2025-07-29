@@ -42,8 +42,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import ir.fatemelyasii.weather.R
-import ir.fatemelyasii.weather.ui.theme.russoFont
-import ir.fatemelyasii.weather.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.view.ui.theme.russoFont
+import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
 import org.koin.compose.viewmodel.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Date

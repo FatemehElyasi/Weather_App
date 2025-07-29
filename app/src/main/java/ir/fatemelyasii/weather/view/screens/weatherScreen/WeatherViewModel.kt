@@ -2,10 +2,10 @@ package ir.fatemelyasii.weather.view.screens.weatherScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.fatemelyasii.weather.repository.WeatherRepository
-import ir.fatemelyasii.weather.utils.baseModel.BaseModel
-import ir.fatemelyasii.weather.viewEntity.DailyForecastViewEntity
-import ir.fatemelyasii.weather.viewEntity.HourlyForecastViewEntity
+import ir.fatemelyasii.weather.model.repository.WeatherRepository
+import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.model.viewEntity.DailyForecastViewEntity
+import ir.fatemelyasii.weather.model.viewEntity.HourlyForecastViewEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

@@ -2,9 +2,9 @@ package ir.fatemelyasii.weather.view.screens.homeScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ir.fatemelyasii.weather.repository.WeatherRepository
-import ir.fatemelyasii.weather.utils.baseModel.BaseModel
-import ir.fatemelyasii.weather.viewEntity.LocationViewEntity
+import ir.fatemelyasii.weather.model.repository.WeatherRepository
+import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.model.viewEntity.LocationViewEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
