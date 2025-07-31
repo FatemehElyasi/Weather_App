@@ -22,7 +22,7 @@ import org.koin.core.component.KoinComponent
 @KoinViewModel
 class HomeViewModel(
     private val weatherRepository: WeatherRepository,
-) : ViewModel(), KoinComponent {
+) : ViewModel() {
 
     private val _locations: MutableStateFlow<BaseModel<List<LocationViewEntity>>?> =
         MutableStateFlow(null)
