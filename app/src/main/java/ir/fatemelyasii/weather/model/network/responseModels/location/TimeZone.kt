@@ -2,15 +2,15 @@ package ir.fatemelyasii.weather.model.network.responseModels.location
 
 import com.google.gson.annotations.SerializedName
 
-data class TimeZoneResponseModel(
+data class TimeZone(
     @SerializedName("Code")
-    val code:String,
+    val code:String?,
     @SerializedName("name")
-    val name:String,
+    val name:String?,
     @SerializedName("GmtOffset")
-    val gmtOffset:Double,
+    val gmtOffset:Double?,
     @SerializedName("IsDaylightSaving")
-    val isDaylightSaving:Boolean,
+    val isDaylightSaving:Boolean?,
     @SerializedName("NextOffsetChange")
     val nextOffsetChange:String?
 )

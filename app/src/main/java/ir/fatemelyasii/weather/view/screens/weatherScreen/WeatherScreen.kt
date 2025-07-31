@@ -42,14 +42,23 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import ir.fatemelyasii.weather.R
+import ir.fatemelyasii.weather.model.di.NetworkModule
 import ir.fatemelyasii.weather.model.viewEntity.DailyForecastViewEntity
 import ir.fatemelyasii.weather.model.viewEntity.HourlyForecastViewEntity
 import ir.fatemelyasii.weather.view.ui.theme.russoFont
 import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.qualifier.named
+import org.koin.java.KoinJavaComponent.inject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+
+val baseUrlIcon: String by inject(
+    String::class.java,
+    named(NetworkModule.API_BASE_URL_ICON_QUALIFIER)
+)
 
 @Composable
 fun WeatherScreen(
@@ -69,7 +78,7 @@ fun WeatherScreen(
 
     Column(
         modifier = Modifier
-        .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp)
     ) {
         WeatherHeader(locationName, country, onBackClick = navigateToHomeScreen)
 
@@ -190,7 +199,6 @@ fun HourlyForecastList(forecasts: List<HourlyForecastViewEntity>) {
                 val time = forecast.epochDateTime?.let {
                     SimpleDateFormat("H a", Locale.getDefault()).format(Date(it * 1000))
                 } ?: "N/A"
-
                 Text(
                     text = time,
                     color = Color.Gray
@@ -198,7 +206,7 @@ fun HourlyForecastList(forecasts: List<HourlyForecastViewEntity>) {
                 Spacer(modifier = Modifier.height(8.dp))
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://developer.accuweather.com/sites/default/files/${forecast.weatherIcon.fixIcon()}-s.png")
+                        .data("${baseUrlIcon}${forecast.weatherIcon.fixIcon()}-s.png")
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Fit,
@@ -229,7 +237,7 @@ fun DailyForecastList(forecasts: List<DailyForecastViewEntity>) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = forecast.dateFormatted,
+                    text = forecast.dateFormatted ?: "N/A",
                     color = Color.White
                 )
 
@@ -251,7 +259,7 @@ fun DailyForecastList(forecasts: List<DailyForecastViewEntity>) {
 
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://developer.accuweather.com/sites/default/files/${forecast.dayIcon.fixIcon()}-s.png")
+                        .data("${baseUrlIcon}${forecast.dayIcon.fixIcon()}-s.png")
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Fit,

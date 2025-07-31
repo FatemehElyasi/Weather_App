@@ -52,7 +52,7 @@ class HomeViewModel(
     private fun observeCityChanges() {
         viewModelScope.launch(Dispatchers.IO) {
             city
-                .debounce(1000)
+                .debounce(2000)
                 .filter { it.length > 2 }
                 .distinctUntilChanged()
                 .collectLatest { query ->

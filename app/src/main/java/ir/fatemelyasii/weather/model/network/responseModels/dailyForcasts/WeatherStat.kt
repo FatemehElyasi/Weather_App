@@ -2,11 +2,11 @@ package ir.fatemelyasii.weather.model.network.responseModels.dailyForcasts
 
 import com.google.gson.annotations.SerializedName
 
-data class WeatherStatResponseModel(
+data class WeatherStat(
     @SerializedName("Icon")
-    val icon: Int,
+    val icon: Int?,
     @SerializedName("IconPhrase")
-    val iconPhrase: String,
+    val iconPhrase: String?,
     @SerializedName("HasPrecipitation")
-    val hasPrecipitation: Boolean
+    val hasPrecipitation: Boolean?
 )

@@ -2,11 +2,11 @@ package ir.fatemelyasii.weather.model.network.responseModels.location
 
 import com.google.gson.annotations.SerializedName
 
-data class ValueResponseModel(
-    @SerializedName("ValueResponseModel")
-    val valueResponseModel: Double,
+data class Value(
+    @SerializedName("Value")
+    val value: Double?,
     @SerializedName("Unit")
-    val unit: String,
+    val unit: String?,
     @SerializedName("UnitType")
-    val unitType: Int
+    val unitType: Int?
 )

@@ -1,12 +1,12 @@
 package ir.fatemelyasii.weather.model.repository
 
 import ir.fatemelyasii.weather.model.network.apiService.ApiService
-import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
-import ir.fatemelyasii.weather.view.utils.mapper.toViewEntity
-import ir.fatemelyasii.weather.view.utils.request
 import ir.fatemelyasii.weather.model.viewEntity.DailyForecastViewEntity
 import ir.fatemelyasii.weather.model.viewEntity.HourlyForecastViewEntity
 import ir.fatemelyasii.weather.model.viewEntity.LocationViewEntity
+import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
+import ir.fatemelyasii.weather.view.utils.mapper.toViewEntity
+import ir.fatemelyasii.weather.view.utils.request
 import map
 import org.koin.core.annotation.Single
 
@@ -20,12 +20,12 @@ class WeatherRepoImpl(
             apiService.searchLocation(query = query)
         }.map { list -> list.map { it.toViewEntity() } }
     }
-
     override suspend fun getDailyForecasts(locationKey: String): BaseModel<List<DailyForecastViewEntity>> {
         return request {
             apiService.getDailyForecasts(locationKey)
         }.map { response ->
-            response.dailyForecasts.map { it.toViewEntity() }
+            val list = response.dailyForecasts ?: emptyList()
+            list.map { it.toViewEntity() }
         }
     }
 

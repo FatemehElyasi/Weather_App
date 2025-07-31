@@ -1,5 +1,6 @@
 package ir.fatemelyasii.weather.view.screens.homeScreen
 
+import android.R.string
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -38,9 +39,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.fatemelyasii.weather.R
+import ir.fatemelyasii.weather.model.di.NetworkModule
+import ir.fatemelyasii.weather.model.di.NetworkModule.Companion.API_BASE_URL_ICON_QUALIFIER
 import ir.fatemelyasii.weather.model.viewEntity.LocationViewEntity
 import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.qualifier.named
+import org.koin.java.KoinJavaComponent.inject
+import kotlin.jvm.java
 
 @Composable
 fun HomeScreen(
