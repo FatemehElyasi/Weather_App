@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import ir.fatemelyasii.weather.model.repository.WeatherRepository
 import ir.fatemelyasii.weather.view.utils.baseModel.BaseModel
 import ir.fatemelyasii.weather.model.viewEntity.LocationViewEntity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +41,7 @@ class HomeViewModel(
 
     fun searchLocation(query: String) {
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _locations.update { BaseModel.Loading }
             weatherRepository.searchLocation(query).also { data ->
                 _locations.update { data }
@@ -49,7 +50,7 @@ class HomeViewModel(
     }
 
     private fun observeCityChanges() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             city
                 .debounce(1000)
                 .filter { it.length > 2 }
