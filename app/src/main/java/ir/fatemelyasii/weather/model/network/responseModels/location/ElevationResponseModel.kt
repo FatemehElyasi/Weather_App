@@ -2,9 +2,9 @@ package ir.fatemelyasii.weather.model.network.responseModels.location
 
 import com.google.gson.annotations.SerializedName
 
-data class Elevation(
+data class ElevationResponseModel(
     @SerializedName("Metric")
-    val metric:Value,
+    val metric:ValueResponseModel,
     @SerializedName("Imperial")
-    val imperial:Value
+    val imperial:ValueResponseModel
 )

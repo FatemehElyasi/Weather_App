@@ -2,7 +2,7 @@ package ir.fatemelyasii.weather.model.network.responseModels.dailyForcasts
 
 import com.google.gson.annotations.SerializedName
 
-data class WeatherStat(
+data class WeatherStatResponseModel(
     @SerializedName("Icon")
     val icon: Int,
     @SerializedName("IconPhrase")

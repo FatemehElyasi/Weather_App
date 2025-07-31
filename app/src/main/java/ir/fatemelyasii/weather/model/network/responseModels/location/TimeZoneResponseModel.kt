@@ -2,7 +2,7 @@ package ir.fatemelyasii.weather.model.network.responseModels.location
 
 import com.google.gson.annotations.SerializedName
 
-data class TimeZone(
+data class TimeZoneResponseModel(
     @SerializedName("Code")
     val code:String,
     @SerializedName("name")

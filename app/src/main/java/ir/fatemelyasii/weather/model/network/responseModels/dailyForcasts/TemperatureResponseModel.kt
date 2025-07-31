@@ -1,11 +1,11 @@
 package ir.fatemelyasii.weather.model.network.responseModels.dailyForcasts
 
 import com.google.gson.annotations.SerializedName
-import ir.fatemelyasii.weather.model.network.responseModels.location.Value
+import ir.fatemelyasii.weather.model.network.responseModels.location.ValueResponseModel
 
-data class Temperature(
+data class TemperatureResponseModel(
     @SerializedName("Minimum")
-    val min: Value,
+    val min: ValueResponseModel,
     @SerializedName("Maximum")
-    val max: Value
+    val max: ValueResponseModel
 )

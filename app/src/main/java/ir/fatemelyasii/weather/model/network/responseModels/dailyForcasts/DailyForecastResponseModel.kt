@@ -2,15 +2,15 @@ package ir.fatemelyasii.weather.model.network.responseModels.dailyForcasts
 
 import com.google.gson.annotations.SerializedName
 
-data class DailyForecast(
+data class DailyForecastResponseModel(
     @SerializedName("Date")
     val date: String,
     @SerializedName("EpochDate")
     val epochDate: Long,
-    @SerializedName("Temperature")
-    val temperature: Temperature,
+    @SerializedName("TemperatureResponseModel")
+    val temperature: TemperatureResponseModel,
     @SerializedName("Day")
-    val day: WeatherStat,
+    val day: WeatherStatResponseModel,
     @SerializedName("Night")
-    val night: WeatherStat
+    val night: WeatherStatResponseModel
 )

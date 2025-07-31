@@ -1,9 +1,9 @@
 package ir.fatemelyasii.weather.model.network.responseModels.hourlyForecast
 
 import com.google.gson.annotations.SerializedName
-import ir.fatemelyasii.weather.model.network.responseModels.location.Value
+import ir.fatemelyasii.weather.model.network.responseModels.location.ValueResponseModel
 
-data class HourlyForecast(
+data class HourlyForecastResponseModel(
     @SerializedName("Date")
     val date: String,
     @SerializedName("EpochDateTime")
@@ -16,6 +16,6 @@ data class HourlyForecast(
     val hasPrecipitation: Boolean,
     @SerializedName("IsDaylight")
     val isDaylight: Boolean,
-    @SerializedName("Temperature")
-    val temperature: Value
+    @SerializedName("TemperatureResponseModel")
+    val temperature: ValueResponseModel
 )
