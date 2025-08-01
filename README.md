@@ -2,15 +2,12 @@
 
 A simple and elegant Android application that provides real-time weather information using a weather API. This project is built with **Kotlin** following modern Android development best practices.
 
-##  Screenshots
+##  Screens
 
 <div align="center">
-  <img src="screenshots/screen1.png" width="200"/>
-  <img src="screenshots/screen2.png" width="200"/>
-  <img src="screenshots/screen3.png" width="200"/>
+  <img src="https://github.com/user-attachments/assets/8317a1d8-e491-45c0-86b3-135cfe803d99" width="200"/>
+  <img src="https://github.com/user-attachments/assets/13dfded0-fc8a-404e-abc4-e5f4a7b2f8d1" width="200"/>
 </div>
-
-
 
 
 
@@ -31,7 +28,7 @@ A simple and elegant Android application that provides real-time weather informa
 - **Android Jetpack** (Flow, ViewModel, Navigation)
 - **Retrofit** – for networking
 - **Coroutines** – for asynchronous operations
-- **Glide** – for image loading
+- **Coil** – for image loading
 - **koin** – for dependency injection
 - **Material Components**
 
