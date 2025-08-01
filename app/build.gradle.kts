@@ -1,9 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serializable)
 }
 
 android {
@@ -69,56 +68,40 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
-    // shimmer:
+    implementation(libs.kotlinx.serialization)
+    //shimmer:
     implementation(libs.compose.shimmer)
-
     //Navigation Component
     implementation(libs.androidx.navigation.compose)
-
     //LiveData-State
     implementation(libs.androidx.runtime.livedata)
-
     //Coil
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
-
-    // glide:
+    implementation(libs.coil.compose.v240)
+    //glide:
     implementation(libs.compose)
-
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
-    //Dagger Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.fragment)
-
-    // Koin
-    implementation (libs.koin.android)
-    implementation (libs.koin.androidx.compose)
-
+    //Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.annotations)
+    implementation(libs.koin.compose.viewmodel)
+    ksp(libs.koin.ksp.compiler)
     //Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-
     //Room
-    implementation (libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
-
-    // Coil
-    implementation(libs.coil.compose.v240)
-
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     //System Ui Controller
     implementation(libs.accompanist.systemuicontroller)
-
     //Lottie
     implementation(libs.lottie.compose)
-
     //material.icons
-    implementation (libs.androidx.material.icons.extended)
-
+    implementation(libs.androidx.material.icons.extended)
 
 }

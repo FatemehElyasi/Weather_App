@@ -1,15 +1,11 @@
 [versions]
 accompanistSystemuicontroller = "0.32.0"
-agp = "8.4.0-alpha09"
+agp = "8.4.2"
 coilCompose = "2.6.0"
 coilComposeVersion = "2.4.0"
 compose = "1.0.0-beta01"
 composeShimmer = "1.2.0"
 converterGson = "2.9.0"
-hiltAndroid = "2.48"
-hiltNavigationFragment = "1.2.0"
-koinAndroid = "3.4.0"
-koinAndroidxCompose = "3.4.4"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -22,18 +18,25 @@ composeBom = "2023.08.00"
 lifecycleViewmodelKtx = "2.7.0"
 lottieCompose = "6.3.0"
 materialIconsExtended = "1.6.5"
-navigationCompose = "2.7.7"
+navigationCompose = "2.8.9"
 roomCompiler = "2.6.1"
 roomKtx = "2.6.1"
 runtimeLivedata = "1.6.0"
-
+koinAndroid = "4.0.4"
+koinCore = "4.0.4"
+koinCompose = "4.0.4"
+koinComposeViewmodel = "4.0.4"
+koinKspCompiler = "2.0.0"
+koinAnnotations = "2.0.0"
+ksp = "1.9.0-1.0.13"
+kotlinSerializationJsonVersion = "1.6.0"
+kotlinSerializablePlugin = "2.1.0"
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-hilt-navigation-fragment = { module = "androidx.hilt:hilt-navigation-fragment", version.ref = "hiltNavigationFragment" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" }
@@ -43,8 +46,6 @@ coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilCompose" }
 compose = { module = "com.github.bumptech.glide:compose", version.ref = "compose" }
 compose-shimmer = { module = "com.valentinilk.shimmer:compose-shimmer", version.ref = "composeShimmer" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -58,13 +59,21 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
+kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerializationJsonVersion" }
+
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinAnnotations" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
+koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koinKspCompiler" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeViewmodel" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-serializable = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerializablePlugin" }
 
