@@ -1,8 +1,8 @@
-package ir.fatemelyasii.weather.model.network.responseModels.location
+package ir.fatemelyasii.weather.model.network.responseModels.locationResponseModel
 
 import com.google.gson.annotations.SerializedName
 
-data class Value(
+data class ValueResponseModel(
     @SerializedName("Value")
     val value: Double?,
     @SerializedName("Unit")

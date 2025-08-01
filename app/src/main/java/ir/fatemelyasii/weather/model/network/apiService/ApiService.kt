@@ -1,8 +1,8 @@
 package ir.fatemelyasii.weather.model.network.apiService
 
-import ir.fatemelyasii.weather.model.network.responseModels.dailyForcasts.DailyForecasts
-import ir.fatemelyasii.weather.model.network.responseModels.hourlyForecast.HourlyForecast
-import ir.fatemelyasii.weather.model.network.responseModels.location.Location
+import ir.fatemelyasii.weather.model.network.responseModels.dailyForcastsResponseModel.DailyForecastsResponseModel
+import ir.fatemelyasii.weather.model.network.responseModels.hourlyForecastResponseModel.HourlyForecastResponseModel
+import ir.fatemelyasii.weather.model.network.responseModels.locationResponseModel.LocationResponseModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,18 +13,18 @@ interface ApiService {
     @GET("locations/v1/cities/search")
     suspend fun searchLocation(
         @Query("q") query: String,
-    ): Response<List<Location>>
+    ): Response<List<LocationResponseModel>>
 
     @GET("forecasts/v1/daily/5day/{location_key}")
     suspend fun getDailyForecasts(
         @Path("location_key") locationKey: String,
         @Query("metric") metric: Boolean = true,
-    ): Response<DailyForecasts>
+    ): Response<DailyForecastsResponseModel>
 
     @GET("forecasts/v1/hourly/12hour/{location_key}")
     suspend fun getHourlyForecasts(
         @Path("location_key") locationKey: String,
         @Query("metric") metric: Boolean = true,
-    ): Response<List<HourlyForecast>>
+    ): Response<List<HourlyForecastResponseModel>>
 }
 

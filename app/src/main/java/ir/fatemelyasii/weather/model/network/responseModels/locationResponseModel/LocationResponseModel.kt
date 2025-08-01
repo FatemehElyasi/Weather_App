@@ -1,8 +1,8 @@
-package ir.fatemelyasii.weather.model.network.responseModels.location
+package ir.fatemelyasii.weather.model.network.responseModels.locationResponseModel
 
 import com.google.gson.annotations.SerializedName
 
-data class Location(
+data class LocationResponseModel(
     @SerializedName("Version")
     val version: Int?,
     @SerializedName("Key")
@@ -18,13 +18,13 @@ data class Location(
     @SerializedName("PrimaryPostalCode")
     val primaryPostalCode: String?,
     @SerializedName("Region")
-    val region: Name?,
+    val region: NameResponseModel?,
     @SerializedName("Country")
-    val country: Name?,
-    @SerializedName("timeZoneResponseModel")
-    val timeZoneResponseModel: TimeZone?,
+    val country: NameResponseModel?,
+    @SerializedName("timeZone")
+    val timeZoneResponseModel: TimeZoneResponseModel?,
     @SerializedName("GeoPosition")
-    val geoPosition: Position?,
+    val geoPosition: PositionResponseModel?,
     @SerializedName("IsAlias")
     val isAlias: Boolean?
 )

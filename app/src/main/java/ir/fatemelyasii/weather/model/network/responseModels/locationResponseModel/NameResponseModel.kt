@@ -1,8 +1,8 @@
-package ir.fatemelyasii.weather.model.network.responseModels.location
+package ir.fatemelyasii.weather.model.network.responseModels.locationResponseModel
 
 import com.google.gson.annotations.SerializedName
 
-data class Name(
+data class NameResponseModel(
     @SerializedName("ID")
     val id: String?,
     @SerializedName("LocalizedName")

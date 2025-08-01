@@ -24,7 +24,7 @@ class WeatherRepoImpl(
         return request {
             apiService.getDailyForecasts(locationKey)
         }.map { response ->
-            val list = response.dailyForecasts ?: emptyList()
+            val list = response.dailyForecastResponseModels ?: emptyList()
             list.map { it.toViewEntity() }
         }
     }
